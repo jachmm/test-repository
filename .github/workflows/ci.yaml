@@ -1,28 +1,20 @@
-name: Java CI with Gradle
+name: Run CI on GitHub actions runner
 
 on: [push, workflow_dispatch]
 
 jobs:
-  build:
-    name: Test CI
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout the latest Git commit
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-
-    - name: Setup JDK
-      uses: actions/setup-java@v2
-      with:
+ ci:
+   name: CI
+   runs-on: ubuntu-latest
+   steps:
+     - name: Checkout the latest Git commit
+       uses: actions/checkout@v2
+       with:
+         fetch-depth: 0
+     - name: Setup JDK
+       uses: actions/setup-java@v2
+       with:
         java-version: '17'
-
-    - name: Grant execute permission for Gradlew
-      run: chmod +x gradlew
-
-    - name: Build with Gradle
-      run: ./gradlew build
-
-    - name: Run tests
-      run: ./gradlew clean test
+        distribution: 'adopt'
+     - name: Run CI process
+       run: ./gradlew clean test
